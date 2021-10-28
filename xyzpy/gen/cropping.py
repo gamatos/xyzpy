@@ -1247,28 +1247,28 @@ _BASE = (
     "    crop = Crop(name='{name}', parent_dir='{parent_dir}')\n")
 
 _CLUSTER_SGE_GROW_ALL_SCRIPT = (
-    "    grow($SGE_TASK_ID, crop=crop, debugging={debugging}, combo_runner_opts = {combo_runner_opts})\n")
+    "    grow($SGE_TASK_ID, crop=crop, debugging={debugging})\n")
 
 _CLUSTER_PBS_GROW_ALL_SCRIPT = (
-    "    grow($PBS_ARRAY_INDEX, crop=crop, debugging={debugging}, combo_runner_opts = {combo_runner_opts})\n")
+    "    grow($PBS_ARRAY_INDEX, crop=crop, debugging={debugging})\n")
 
 _CLUSTER_SLURM_GROW_ALL_SCRIPT = (
-    "    grow($SLURM_ARRAY_TASK_ID, crop=crop, debugging={debugging}, combo_runner_opts = {combo_runner_opts})\n")
+    "    grow($SLURM_ARRAY_TASK_ID, crop=crop, debugging={debugging})\n")
 
 _CLUSTER_SGE_GROW_PARTIAL_SCRIPT = (
     "    batch_ids = {batch_ids}]\n"
     "    grow(batch_ids[$SGE_TASK_ID - 1], crop=crop, "
-    "debugging={debugging}, combo_runner_opts = {combo_runner_opts})\n")
+    "debugging={debugging})\n")
 
 _CLUSTER_PBS_GROW_PARTIAL_SCRIPT = (
     "    batch_ids = {batch_ids}\n"
     "    grow(batch_ids[$PBS_ARRAY_INDEX - 1], crop=crop, "
-    "debugging={debugging}, combo_runner_opts = {combo_runner_opts})\n")
+    "debugging={debugging})\n")
 
 _CLUSTER_SLURM_GROW_PARTIAL_SCRIPT = (
     "    batch_ids = {batch_ids}\n"
     "    grow(batch_ids[$SLURM_ARRAY_TASK_ID - 1], crop=crop, "
-    "debugging={debugging}, combo_runner_opts = {combo_runner_opts})\n")
+    "debugging={debugging})\n")
 
 _BASE_CLUSTER_SCRIPT_END = (
     "EOF\n"
@@ -1293,7 +1293,6 @@ def gen_cluster_script(
     output_directory=None,
     extra_resources=None,
     debugging=False,
-    combo_runner_opts = {}
 ):
     """Generate a cluster script to grow a Crop.
 
@@ -1397,7 +1396,6 @@ def gen_cluster_script(
         'working_directory': full_parent_dir,
         'extra_resources': extra_resources,
         'debugging': debugging,
-        'combo_runner_opts': combo_runner_opts,
     }
 
     if scheduler == 'sge':
@@ -1472,7 +1470,6 @@ def grow_cluster(
     output_directory=None,
     extra_resources=None,
     debugging=False,
-    combo_runner_opts = {}
 ):  # pragma: no cover
     """Automagically submit SGE, PBS, or slurm jobs to grow all missing
     results.
@@ -1539,7 +1536,6 @@ def grow_cluster(
         mpi=mpi,
         extra_resources=extra_resources,
         debugging=debugging,
-        combo_runner_opts=combo_runner_opts
     )
 
     script_file = os.path.join(crop.location, "__qsub_script__.sh")

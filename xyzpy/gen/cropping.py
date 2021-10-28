@@ -1208,9 +1208,7 @@ class Reaper(object):
 _SGE_HEADER = (
     "#!/bin/bash -l\n"
     "#$ -S /bin/bash\n"
-    "#$ -l h_rt={hours}:{minutes}:{seconds},mem={gigabytes}G\n"
-    "#$ -l tmpfs={temp_gigabytes}G\n"
-    "{extra_resources}\n"
+    "#$ -l h_rt={hours}:{minutes}:{seconds},h_vmem={gigabytes}G\n"
     "#$ -N {name}\n"
     "mkdir -p {output_directory}\n"
     "#$ -wd {output_directory}\n"

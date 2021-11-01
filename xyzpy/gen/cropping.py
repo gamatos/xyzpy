@@ -616,7 +616,7 @@ class Crop(object):
         """
         self.grow(batch_ids=self.missing_results(), **combo_runner_opts)
 
-    def reap_combos(self, wait=False, clean_up=None, allow_incomplete=False):
+    def reap_combos(self, wait=False, clean_up=None, allow_incomplete=False, flat = False):
         """Reap already sown and grown results from this crop.
 
         Parameters
@@ -655,6 +655,7 @@ class Crop(object):
                 cases=settings['cases'],
                 constants={},
                 shuffle=settings.get('shuffle', False),
+                flat = flat
             )
 
         if clean_up:
@@ -830,6 +831,7 @@ class Crop(object):
         overwrite=None,
         clean_up=None,
         allow_incomplete=False,
+        flat = False
     ):
         """Reap sown and grown combos from disk. Return a dataset if a runner
         or harvester is set, otherwise, the raw nested tuple.
@@ -860,7 +862,7 @@ class Crop(object):
         nested tuple or xarray.Dataset
         """
         opts = dict(clean_up=clean_up, wait=wait,
-                    allow_incomplete=allow_incomplete)
+                    allow_incomplete=allow_incomplete, flat=flat)
 
         if isinstance(self.farmer, Runner):
             return self.reap_runner(self.farmer, **opts)

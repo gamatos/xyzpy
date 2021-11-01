@@ -39,7 +39,7 @@ def infer_shape(x):
     try:
         shape += (len(x),)
         return shape + infer_shape(x[0])
-    except TypeError:
+    except (TypeError, KeyError):
         return shape
 
 

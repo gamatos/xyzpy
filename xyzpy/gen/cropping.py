@@ -1258,7 +1258,7 @@ _CLUSTER_SLURM_GROW_ALL_SCRIPT = (
     "    grow($SLURM_ARRAY_TASK_ID, crop=crop, debugging={debugging})\n")
 
 _CLUSTER_SGE_GROW_PARTIAL_SCRIPT = (
-    "    batch_ids = {batch_ids}]\n"
+    "    batch_ids = {batch_ids}\n"
     "    grow(batch_ids[$SGE_TASK_ID - 1], crop=crop, "
     "debugging={debugging})\n")
 
